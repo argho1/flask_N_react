@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import ContactList from './ContactList';
 import './App.css';
+import ContactForm from './ContactForm';
 
 function App() {
 
-  const [contacts, setContacts] = useState([{ "firstName":"Tim", "lastName":"Joy", "email":"whatisthat", id:1 }]);
+  const [contacts, setContacts] = useState([]);
+  const [isModelOpen, setIsModelOpen] = useState(false);
 
   useEffect(() => {
-    // fetchContacts()
+    fetchContacts()
   }, []);
 
   const fetchContacts = async () => {
@@ -17,7 +19,27 @@ function App() {
     console.log(data.contacts);
   }
 
-  return <ContactList contacts={contacts} />
-};
+  const closeModal = () => {
+    setIsModelOpen(false)
+  }
+
+  const openCreateModel = () => {
+    if (!isModelOpen) setIsModelOpen(true)
+  }
+
+  return (
+    <>
+      <ContactList contacts={contacts} />
+      <button onClick={openCreateModel}>Create New Contact</button>
+      {isModelOpen && <div className="modal">
+        <div className="modal-content">
+          <span className="close" onClick={closeModal} >&times;</span>
+          <ContactForm />
+        </div>
+      </div>
+      }
+    </>
+  );
+}
 
 export default App;
