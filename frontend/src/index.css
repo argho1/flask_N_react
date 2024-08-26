@@ -4,3 +4,7 @@
   background-color: #242424;
 
 }
+
+input, button, label {
+  margin-top: 10px;
+}
