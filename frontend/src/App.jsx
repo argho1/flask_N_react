@@ -7,6 +7,7 @@ function App() {
 
   const [contacts, setContacts] = useState([]);
   const [isModelOpen, setIsModelOpen] = useState(false);
+  const [currentContact, setCurrentContact] = useState({})
 
   useEffect(() => {
     fetchContacts()
@@ -21,20 +22,32 @@ function App() {
 
   const closeModal = () => {
     setIsModelOpen(false)
+    setCurrentContact({})
   }
 
   const openCreateModel = () => {
     if (!isModelOpen) setIsModelOpen(true)
   }
 
+  const openEditModal = (contact) => {
+    if (isModelOpen) return
+    setCurrentContact(contact)
+    setIsModelOpen(true)
+  }
+
+  const onUpdate = () => {
+    closeModal()
+    fetchContacts()
+  }
+
   return (
     <>
-      <ContactList contacts={contacts} />
+      <ContactList contacts={contacts} updateContact={openEditModal} updateCallback={onUpdate}/>
       <button onClick={openCreateModel}>Create New Contact</button>
       {isModelOpen && <div className="modal">
         <div className="modal-content">
           <span className="close" onClick={closeModal} >&times;</span>
-          <ContactForm />
+          <ContactForm existingContacts={currentContact} updateCallback={onUpdate}/>
         </div>
       </div>
       }
