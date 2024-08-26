@@ -47,7 +47,7 @@ function App() {
       {isModelOpen && <div className="modal">
         <div className="modal-content">
           <span className="close" onClick={closeModal} >&times;</span>
-          <ContactForm existingContacts={currentContact} updateCallback={onUpdate}/>
+          <ContactForm existingContact={currentContact} updateCallback={onUpdate}/>
         </div>
       </div>
       }
